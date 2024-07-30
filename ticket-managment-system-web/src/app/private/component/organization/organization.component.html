@@ -1,0 +1,18 @@
+<div class="grid-container">
+    <mat-grid-list cols="1" rowHeight="100px" [gutterSize]="'10px'">
+        <mat-grid-tile *ngFor="let item of OrganizationDetails">
+            <div class="leftVerticalAlign">
+                <div class="organization-detail-container">
+                    {{ item.organization.name }} Role: {{ item.organizationDetail.organizationUserRoleType }}
+                </div>
+                <div class="button-container">
+                    <button mat-raised-button
+                        (click)="NavigateTo(item.organization.id!)"
+                    >
+                        Open
+                    </button>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

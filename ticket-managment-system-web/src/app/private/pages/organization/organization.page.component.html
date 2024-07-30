@@ -1,0 +1,24 @@
+<div>
+    <mat-table
+        [dataSource]="DataSource"
+    >
+        <ng-container matColumnDef="ProjectName">
+            <th mat-header-cell *matHeaderCellDef> Project Name </th>
+            <td mat-cell *matCellDef="let project"> {{project.projectName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let project">
+                <div class="table-button-container">
+                    <button mat-icon-button>
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
+            </td>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="Columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: Columns;"></mat-row>
+    </mat-table>
+</div>
