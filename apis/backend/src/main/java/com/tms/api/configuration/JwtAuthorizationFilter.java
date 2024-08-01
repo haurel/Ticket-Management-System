@@ -3,7 +3,6 @@ package com.tms.api.configuration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,7 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) 
         throws ServletException, IOException
     {
-        Map<String, Object> errorDetails = new HashMap<>();
+        var errorDetails = new HashMap<String, Object>();
 
         try {
             String accessToken = jwtUtil.resolveToken(request);

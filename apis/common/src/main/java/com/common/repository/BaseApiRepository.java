@@ -8,6 +8,7 @@ import java.net.http.HttpResponse;
 
 import org.springframework.stereotype.Repository;
 
+import com.common.helpers.GlobalProperties;
 import com.common.objects.models.request.RequestModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +33,7 @@ public class BaseApiRepository {
             .newBuilder()
             .uri(uri)
             .header("Content-Type", request.contentType())
+            .header(GlobalProperties.API_KEY_HEADER, GlobalProperties.API_TOKEN)
             .POST(HttpRequest.BodyPublishers.ofString(request.requestBody()))
             .build();
 

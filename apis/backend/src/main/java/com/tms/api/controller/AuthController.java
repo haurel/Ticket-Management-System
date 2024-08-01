@@ -30,7 +30,6 @@ public class AuthController extends BaseController {
     
     @PostMapping("login")
     public ResponseModel<JwtUserModel> Login(@RequestBody LoginUserRequestModel request) {
-        System.out.println("AUTH/LOGIN - BACKENDAPI");
         var response = _authService.Login(request);
         return response;
     }

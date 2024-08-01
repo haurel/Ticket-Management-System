@@ -4,6 +4,7 @@ import java.net.http.HttpClient;
 
 import org.springframework.stereotype.Repository;
 
+import com.common.helpers.apis.AuthApi;
 import com.common.objects.models.request.RequestModel;
 import com.common.objects.models.user.UserModel;
 import com.common.objects.models.user.request.LoginUserRequestModel;
@@ -21,6 +22,7 @@ public class AuthApiRepository extends BaseApiRepository {
         ObjectMapper objectMapper) {
         super(httpClient, objectMapper);
         _authApiUrl = "http://localhost:8081";
+        //_authApiUrl = "http://10.5.0.2:8081"; //TODO remove
     }
 
     public UserModel Login(LoginUserRequestModel loginUserRequest) {
@@ -29,7 +31,7 @@ public class AuthApiRepository extends BaseApiRepository {
         try {
             var jsonRequest = objectMapper.writeValueAsString(loginUserRequest);
 
-            var request = new RequestModel(_authApiUrl, "auth", "login", jsonRequest, null);
+            var request = new RequestModel(_authApiUrl, AuthApi.Controller.Auth, AuthApi.Action.Login, jsonRequest, null);
             userResponse = Post(request, UserModel.class);
             return userResponse;
 
@@ -44,7 +46,7 @@ public class AuthApiRepository extends BaseApiRepository {
         var objectMapper = new ObjectMapper();
         try {
             var jsonRequest = objectMapper.writeValueAsString(registerUserRequest);
-            var request = new RequestModel(_authApiUrl, "auth", "register", jsonRequest, null);
+            var request = new RequestModel(_authApiUrl, AuthApi.Controller.Auth, AuthApi.Action.Login, jsonRequest, null);
             Post(request, Boolean.class);
             //TODO handle response from AuthAPI
             return true;
