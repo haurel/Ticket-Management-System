@@ -11,6 +11,7 @@ import com.common.objects.models.user.UserModel;
 import com.common.objects.models.user.request.LoginUserRequestModel;
 import com.common.objects.models.user.request.RegisterUserRequestModel;
 import com.common.repository.BaseApiRepository;
+import com.configuration.CommonProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,8 +21,9 @@ public class AuthApiRepository extends BaseApiRepository {
     private String _authApiUrl;
 
     public AuthApiRepository(HttpClient httpClient,
-        ObjectMapper objectMapper) {
-        super(httpClient, objectMapper);
+        ObjectMapper objectMapper,
+        CommonProperties commonProperties) {
+        super(httpClient, objectMapper, commonProperties);
     }
 
     public UserModel Login(LoginUserRequestModel loginUserRequest) {

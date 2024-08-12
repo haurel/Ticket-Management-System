@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.common.objects.models.logging.LoggingRequestModel;
 import com.common.objects.models.request.RequestModel;
 import com.common.repository.BaseApiRepository;
+import com.configuration.CommonProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,9 +16,10 @@ public class LoggingApiRepository extends BaseApiRepository {
     private String _loggingApiUrl;
 
     public LoggingApiRepository(HttpClient httpClient,
-        ObjectMapper objectMapper) {
-        super(httpClient, objectMapper);
-        _loggingApiUrl = "http://localhost:8082";
+        ObjectMapper objectMapper,
+        CommonProperties commonProperties) {
+        super(httpClient, objectMapper, commonProperties);
+        _loggingApiUrl = commonProperties.getLoggingApiUrl();
     }
 
     public Boolean LogException(LoggingRequestModel loggingRequest) {

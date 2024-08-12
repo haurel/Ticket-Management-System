@@ -13,6 +13,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class CommonBaseBeanConfigurations {
     
     @Bean
+    CommonProperties commonProperties() {
+        return new CommonProperties();
+    }
+    
+    @Bean
     HttpClient httpClient() {
         return HttpClient.newBuilder().build();
     }
@@ -26,6 +31,6 @@ public class CommonBaseBeanConfigurations {
 
     @Bean
     LoggingApiRepository loggingApiRepository() {
-        return new LoggingApiRepository(httpClient(), objectMapper());
+        return new LoggingApiRepository(httpClient(), objectMapper(), commonProperties());
     }
 }

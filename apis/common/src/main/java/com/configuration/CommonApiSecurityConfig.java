@@ -1,5 +1,6 @@
 package com.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,9 @@ public class CommonApiSecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
+    @Autowired
+    private CommonProperties commonProperties;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
@@ -36,7 +40,7 @@ public class CommonApiSecurityConfig {
                         
             )
             .httpBasic(Customizer.withDefaults())
-            .addFilterBefore(new ApiTokenAuthenticationFilter(), BasicAuthenticationFilter.class);
+            .addFilterBefore(new ApiTokenAuthenticationFilter(commonProperties), BasicAuthenticationFilter.class);
 
         return httpSecurity.getOrBuild();
     }
