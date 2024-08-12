@@ -1,4 +1,4 @@
-package com.auth.authapi.configuration.securityfilter;
+package com.configuration.securityfilter;
 
 import java.util.Collection;
 

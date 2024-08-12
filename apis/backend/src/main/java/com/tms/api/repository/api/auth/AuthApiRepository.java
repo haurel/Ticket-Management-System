@@ -2,6 +2,7 @@ package com.tms.api.repository.api.auth;
 
 import java.net.http.HttpClient;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.common.helpers.apis.AuthApi;
@@ -15,14 +16,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Repository
 public class AuthApiRepository extends BaseApiRepository {
-    //@Value("${authapi.url}")
+    @Value("${authapi.url}")
     private String _authApiUrl;
 
     public AuthApiRepository(HttpClient httpClient,
         ObjectMapper objectMapper) {
         super(httpClient, objectMapper);
-        _authApiUrl = "http://localhost:8081";
-        //_authApiUrl = "http://10.5.0.2:8081"; //TODO remove
     }
 
     public UserModel Login(LoginUserRequestModel loginUserRequest) {
