@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.common.helpers.GlobalProperties;
 import com.common.objects.models.request.RequestModel;
+import com.configuration.CommonProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,22 +19,24 @@ public class BaseApiRepository {
     
     private HttpClient _httpClient;
     private ObjectMapper _objectMapper;
+    private CommonProperties _commonProperties;
 
     public BaseApiRepository(HttpClient httpClient,
-        ObjectMapper objectMapper) {
+        ObjectMapper objectMapper,
+        CommonProperties commonProperties) {
         super();
         _httpClient = httpClient;
         _objectMapper = objectMapper;
+        _commonProperties = commonProperties;
     }
 
     public <T> T Post(RequestModel request, Class<T> classType) {
         var uri = UrlBuilder(request.baseUrl(), request.controller(), request.action());
-
         var httpRequest = HttpRequest
             .newBuilder()
             .uri(uri)
             .header("Content-Type", request.contentType())
-            .header(GlobalProperties.API_KEY_HEADER, GlobalProperties.API_TOKEN)
+            .header(GlobalProperties.API_KEY_HEADER, _commonProperties.getApiToken())
             .POST(HttpRequest.BodyPublishers.ofString(request.requestBody()))
             .build();
 

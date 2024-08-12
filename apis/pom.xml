@@ -42,7 +42,6 @@
   </properties>
     
   <modules>
-    <module>common</module>
     <module>backend</module>
     <module>authapi</module>
     <module>loggingapi</module>

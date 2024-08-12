@@ -1,4 +1,4 @@
-package com.auth.authapi.configuration;
+package com.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @Configuration
-public class SwaggerConfiguration {
+public class CommonApiSwaggerConfiguration {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()

@@ -10,7 +10,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Configuration
-public class SpringConfiguration {
+public class CommonBaseBeanConfigurations {
+    
+    @Bean
+    CommonProperties commonProperties() {
+        return new CommonProperties();
+    }
     
     @Bean
     HttpClient httpClient() {
@@ -26,6 +31,6 @@ public class SpringConfiguration {
 
     @Bean
     LoggingApiRepository loggingApiRepository() {
-        return new LoggingApiRepository(httpClient(), objectMapper());
+        return new LoggingApiRepository(httpClient(), objectMapper(), commonProperties());
     }
 }

@@ -1,4 +1,4 @@
-package com.auth.authapi.configuration.securityfilter;
+package com.configuration.securityfilter;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.common.helpers.GlobalProperties;
+import com.configuration.CommonProperties;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ApiTokenAuthenticationFilter extends OncePerRequestFilter {
+
+    private final CommonProperties _commonProperties;
+
+    public ApiTokenAuthenticationFilter(CommonProperties commonProperties) {
+        _commonProperties = commonProperties;
+    }
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -27,11 +34,11 @@ public class ApiTokenAuthenticationFilter extends OncePerRequestFilter {
             var httpServletRequest = request;
             var apiKey = getHeader(httpServletRequest, GlobalProperties.API_KEY_HEADER);
             
-            if (apiKey == null || !apiKey.equals(GlobalProperties.API_TOKEN)) {
+            if (apiKey == null || !apiKey.equals(_commonProperties.getApiToken())) {
                 throw new BadCredentialsException("Unauthorized");
             }
 
-            var apiKeyAuthentication = new ApiKeyAuthenticationToken(GlobalProperties.API_KEY_HEADER, GlobalProperties.API_TOKEN, AuthorityUtils.NO_AUTHORITIES);
+            var apiKeyAuthentication = new ApiKeyAuthenticationToken(GlobalProperties.API_KEY_HEADER, _commonProperties.getApiToken(), AuthorityUtils.NO_AUTHORITIES);
             SecurityContextHolder.getContext().setAuthentication(apiKeyAuthentication);
         } catch (Exception exp) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;

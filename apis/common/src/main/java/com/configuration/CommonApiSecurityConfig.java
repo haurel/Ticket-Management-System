@@ -1,5 +1,6 @@
-package com.auth.authapi.configuration;
+package com.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,15 +10,23 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.auth.authapi.configuration.securityfilter.ApiTokenAuthenticationFilter;
-
+import com.configuration.securityfilter.ApiTokenAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class CommonApiSecurityConfig {
+    @Bean
+	BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+    @Autowired
+    private CommonProperties commonProperties;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
@@ -31,7 +40,7 @@ public class SecurityConfig {
                         
             )
             .httpBasic(Customizer.withDefaults())
-            .addFilterBefore(new ApiTokenAuthenticationFilter(), BasicAuthenticationFilter.class);
+            .addFilterBefore(new ApiTokenAuthenticationFilter(commonProperties), BasicAuthenticationFilter.class);
 
         return httpSecurity.getOrBuild();
     }
