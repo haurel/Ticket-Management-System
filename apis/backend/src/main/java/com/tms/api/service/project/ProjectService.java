@@ -57,7 +57,7 @@ public class ProjectService extends BaseService {
 
             var projects = projectDocuments
                 .stream()
-                .map(p -> new ProjectModel(p.getProjectId(), p.getOrganizationId(), p.getProjectGuid(), p.getProjectGuid(), p.getUsers(), p.getStatusId(), p.getCreatedDate(), p.getModifiedDate()))
+                .map(p -> new ProjectModel(p.getProjectId(), p.getOrganizationId(), p.getProjectGuid(), p.getProjectName(), p.getUsers(), p.getStatusId(), p.getCreatedDate(), p.getModifiedDate()))
                 .collect(Collectors.toList());
 
             return GetResponse(new OrganizationProjectViewModel(organizationModel, projects), null);
@@ -125,7 +125,7 @@ public class ProjectService extends BaseService {
                 modifiedDate = GetDateNow();
             }
 
-            var projectDocument = new ProjectDocument(project.projectId(), project.organizationId(), project.projectGuid(), project.projectName(), project.Users(), project.statusId(), project.createdDate(), modifiedDate);
+            var projectDocument = new ProjectDocument(project.projectId(), project.organizationId(), project.projectGuid(), project.projectName(), project.users(), project.statusId(), project.createdDate(), modifiedDate);
             _projectRepository.save(projectDocument);
             return GetResponse(true, null);
         } catch (Exception exception) {

@@ -35,25 +35,21 @@ export class LoginPageComponent extends BasePage implements OnInit {
         this.LoginRequest.Username = this.LoginForm.get('username')?.value;
         this.LoginRequest.Password = this.LoginForm.get('password')?.value;
 
-        this.authService.Login(this.LoginRequest)
-            .subscribe({
-                next: (response) => {
-                    if (!response.Response
-                        || response.ResponseStatus == ResponseStatusType.Error
-                    ) {
-                        this.DisplayMessage(response.Message, NotificationType.Error);
-                    } else {
-                        localStorage.setItem('user', JSON.stringify(response.Response));
+        this.CallApi(
+            this.authService.Login(this.LoginRequest),
+            (response) => {
+                if (!response.response
+                    || response.responseStatus == ResponseStatusType.Error
+                ) {
+                    this.DisplayMessage(response.message, NotificationType.Error);
+                } else {
+                    localStorage.setItem('user', JSON.stringify(response.response));
 
-                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                        this.router.navigateByUrl(returnUrl);
-                    }
-                },
-                error: error => {
-                    this.DisplayMessage(error, NotificationType.Error);
-                    // this.loading = false;
+                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                    this.router.navigateByUrl(returnUrl);
                 }
-            });
+            }
+        )
     }
 
     public Register() {

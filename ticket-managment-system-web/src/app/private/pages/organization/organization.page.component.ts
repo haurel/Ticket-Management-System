@@ -18,7 +18,7 @@ export class OrganizationPageComponent extends BasePage implements OnInit {
         private organizationService: OrganizationService,
     ) {
         super(injector);
-        this.Organization = route.snapshot.data['data'].Response;
+        this.Organization = route.snapshot.data['data'].response;
     }
 
     public ngOnInit(): void {

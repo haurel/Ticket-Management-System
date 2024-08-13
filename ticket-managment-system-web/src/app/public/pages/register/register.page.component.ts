@@ -38,10 +38,10 @@ export class RegisterPageComponent extends BasePage implements OnInit {
         this.authService.Register(this.RegisterRequest)
             .subscribe({
                 next: (response) => {
-                    if (!response.Response
-                        || response.ResponseStatus === ResponseStatusType.Error
+                    if (!response.response
+                        || response.responseStatus === ResponseStatusType.Error
                     ) {
-                        this.DisplayMessage(response.Message, NotificationType.Error);
+                        this.DisplayMessage(response.message, NotificationType.Error);
                     }
 
                     this.router.navigateByUrl('p/login');

@@ -6,8 +6,7 @@ export class ProjectModel {
     public organizationId!: string;
     public projectGuid!: string;
     public projectName!: string;
-    public Users: UserPermissionModel[] = [];
-    public SprintIds!: string;
+    public users: UserPermissionModel[] = [];
     public statusId!: StatusType;
 
     constructor(project: Partial<ProjectModel> = {}) {

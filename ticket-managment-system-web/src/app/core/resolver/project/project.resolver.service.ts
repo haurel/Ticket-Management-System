@@ -22,10 +22,10 @@ export class ProjectResolverService implements Resolve<ResponseModel<Organizatio
     return this.projectService.GetOrganizationProjects(organizationId)
         .pipe(
             map(response => {
-                if (!response.Response
-                    || response.ResponseStatus == ResponseStatusType.Error
+                if (!response.response
+                    || response.responseStatus == ResponseStatusType.Error
                 ) {
-                    this.notificationService.DisplayMessage(new NotificationModel({Message: response.Message, NotificationType: NotificationType.Error}));
+                    this.notificationService.DisplayMessage(new NotificationModel({Message: response.message, NotificationType: NotificationType.Error}));
                     this.router.navigateByUrl('/');
                     return null;
                 } else {

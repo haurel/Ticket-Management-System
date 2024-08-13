@@ -15,11 +15,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SprintModel {
-    private String SprintId;
-    private String SprintName;
-    private String ProjectId;
-    private List<SprintTaskModel> Tasks;
-    private SprintType SprintType;
-    private Date StartDate;
-    private Date EndDate;
+    private String sprintId;
+    private String sprintName;
+    private String projectId;
+    private List<SprintTaskModel> tasks;
+    private SprintType sprintType;
+    private Date startDate;
+    private Date endDate;
 }

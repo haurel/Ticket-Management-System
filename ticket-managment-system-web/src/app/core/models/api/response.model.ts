@@ -1,11 +1,9 @@
-import { HttpStatusCode } from "@angular/common/http";
 import { ResponseStatusType } from "../../enums";
 
 export class ResponseModel<T> {
-    public Response: T | null = null;
-    public Message!: string;
-    public ResponseStatus: ResponseStatusType = ResponseStatusType.Error;
-    public HttpStatus: HttpStatusCode = HttpStatusCode.NotFound;
+    public response: T | null = null;
+    public message!: string;
+    public responseStatus: ResponseStatusType = ResponseStatusType.Error;
 
     constructor(user: Partial<ResponseModel<T>>) {
         Object.assign(user);

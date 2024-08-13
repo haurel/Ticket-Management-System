@@ -11,7 +11,7 @@ public record ProjectModel(
     String organizationId,
     String projectGuid,
     String projectName,
-    List<UserPermissionModel> Users,
+    List<UserPermissionModel> users,
     StatusType statusId,
     Date createdDate,
     Date modifiedDate
