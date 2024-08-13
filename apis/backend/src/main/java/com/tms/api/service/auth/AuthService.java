@@ -12,10 +12,9 @@ import com.common.objects.models.jwt.JwtUserModel;
 import com.common.objects.models.user.request.LoginUserRequestModel;
 import com.common.objects.models.user.request.RegisterUserRequestModel;
 import com.common.repository.logging.LoggingApiRepository;
-import com.common.types.api.ResponseStatusType;
+import com.common.service.BaseService;
 import com.tms.api.configuration.JwtUtil;
 import com.tms.api.repository.api.auth.AuthApiRepository;
-import com.tms.api.service.BaseService;
 
 @Service
 public class AuthService extends BaseService {
@@ -35,13 +34,15 @@ public class AuthService extends BaseService {
     
     public ResponseModel<JwtUserModel> Login(LoginUserRequestModel request) {
         try {
-            var user = _authApiRepository.Login(request);
-            if (user == null) {
+            var loginUserReponse = _authApiRepository.Login(request);
+            if (loginUserReponse == null
+                || loginUserReponse.getResponse() == null) {
                 return GetResponse(null, "Username or password is incorrect!");
             }
 
+            var user = loginUserReponse.getResponse();
             var token = _jwtUtil.createToken(user);
-            var jwtUser = new JwtUserModel(user.UserId(), user.Username(), token);
+            var jwtUser = new JwtUserModel(user.getUserId(), user.getUsername(), token);
             return GetResponse(jwtUser, null);
         } catch (Exception exception) {
             var map = new HashMap<String, Object>();
@@ -57,7 +58,7 @@ public class AuthService extends BaseService {
     public ResponseModel<Boolean> Register(RegisterUserRequestModel request) {
         try {
             var response = _authApiRepository.Register(request);
-            return GetResponse(!response ? null : response, !response ? ResponseStatusType.Error.toString() : ResponseStatusType.Success.toString());
+            return response;
         } catch (Exception exception) {
             var logRequest = new RegisterUserRequestModel(request.Username(), null, request.EmailAddress());
             var map = new HashMap<String, Object>();

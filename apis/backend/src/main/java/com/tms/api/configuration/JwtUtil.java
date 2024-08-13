@@ -33,9 +33,9 @@ public class JwtUtil {
 
     public String createToken(UserModel user) {
         String encodedString = Base64.getEncoder().encodeToString(_secretKey.getBytes());
-        Claims claims = Jwts.claims().setSubject(user.Username());
-        claims.put("userId",user.UserId());
-        claims.put("emailAddress",user.EmailAddress());
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
+        claims.put("userId",user.getUserId());
+        claims.put("emailAddress",user.getEmailAddress());
 
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));

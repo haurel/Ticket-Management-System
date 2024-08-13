@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.common.objects.models.api.ResponseModel;
 import com.common.repository.logging.LoggingApiRepository;
+import com.common.service.BaseService;
 import com.common.types.api.ResponseStatusType;
 import com.tms.api.objects.models.organization.OrganizationModel;
 import com.tms.api.objects.models.project.ProjectModel;
@@ -22,7 +23,6 @@ import com.tms.api.objects.types.StatusType;
 import com.tms.api.objects.viewmodels.organization.OrganizationProjectViewModel;
 import com.tms.api.repository.database.organization.OrganizationRepository;
 import com.tms.api.repository.database.project.ProjectRepository;
-import com.tms.api.service.BaseService;
 
 @Service
 @Transactional

@@ -9,10 +9,11 @@ import java.net.http.HttpResponse;
 import org.springframework.stereotype.Repository;
 
 import com.common.helpers.GlobalProperties;
+import com.common.objects.models.api.ResponseModel;
 import com.common.objects.models.request.RequestModel;
 import com.configuration.CommonProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @Repository
 public class BaseApiRepository {
@@ -30,7 +31,7 @@ public class BaseApiRepository {
         _commonProperties = commonProperties;
     }
 
-    public <T> T Post(RequestModel request, Class<T> classType) {
+    public <T> ResponseModel<T> Post(RequestModel request, Class<T> classType) throws Exception {
         var uri = UrlBuilder(request.baseUrl(), request.controller(), request.action());
         var httpRequest = HttpRequest
             .newBuilder()
@@ -41,22 +42,21 @@ public class BaseApiRepository {
             .build();
 
         HttpResponse<String> httpResponse;
-        T response = null;
+        ResponseModel<T> response = null;
         try {
             httpResponse = _httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             var body = httpResponse.body();
             response = DeserializeResponse(body, classType);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (Exception exception) {
+            throw exception;
         }
 
         return response;
     }
 
-    private <T> T DeserializeResponse(String body, Class<T> classType) {
+    private <T> ResponseModel<T> DeserializeResponse(String body, Class<T> classType) throws Exception {
         //TypeReference<T> typeReference = new TypeReference<T>() {};
-        T response = null;
+        ResponseModel<T> response = null;
 
         if (body == null || body.isEmpty()) {
             return response;
@@ -64,10 +64,10 @@ public class BaseApiRepository {
 
         try {
             //response = _objectMapper.readValue(body, typeReference);
-            response = _objectMapper.readValue(body, classType);
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            var type = TypeFactory.defaultInstance().constructParametricType(ResponseModel.class, classType);
+            response = _objectMapper.readValue(body, type) ;
+        } catch (Exception exception) {
+            throw exception;
         }
 
         return response;

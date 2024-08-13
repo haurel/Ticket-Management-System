@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.common.helpers.apis.AuthApi;
+import com.common.objects.models.api.ResponseModel;
 import com.common.objects.models.request.RequestModel;
 import com.common.objects.models.user.UserModel;
 import com.common.objects.models.user.request.LoginUserRequestModel;
 import com.common.objects.models.user.request.RegisterUserRequestModel;
 import com.common.repository.BaseApiRepository;
 import com.configuration.CommonProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Repository
@@ -26,34 +26,30 @@ public class AuthApiRepository extends BaseApiRepository {
         super(httpClient, objectMapper, commonProperties);
     }
 
-    public UserModel Login(LoginUserRequestModel loginUserRequest) {
+    public ResponseModel<UserModel> Login(LoginUserRequestModel loginUserRequest) throws Exception {
         var objectMapper = new ObjectMapper();
-        UserModel userResponse = null;
+        ResponseModel<UserModel> userResponse = null;
         try {
             var jsonRequest = objectMapper.writeValueAsString(loginUserRequest);
 
             var request = new RequestModel(_authApiUrl, AuthApi.Controller.Auth, AuthApi.Action.Login, jsonRequest, null);
             userResponse = Post(request, UserModel.class);
             return userResponse;
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return userResponse;
+        } catch (Exception exception) {
+            throw exception;
         }
     }
 
-    public Boolean Register(RegisterUserRequestModel registerUserRequest) {
+    public ResponseModel<Boolean> Register(RegisterUserRequestModel registerUserRequest) throws Exception {
         var objectMapper = new ObjectMapper();
+        ResponseModel<Boolean> response = null;
         try {
             var jsonRequest = objectMapper.writeValueAsString(registerUserRequest);
             var request = new RequestModel(_authApiUrl, AuthApi.Controller.Auth, AuthApi.Action.Login, jsonRequest, null);
-            Post(request, Boolean.class);
-            //TODO handle response from AuthAPI
-            return true;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return false;
+            response = Post(request, Boolean.class);
+            return response;
+        } catch (Exception exception) {
+            throw exception;
         }
     }
 }

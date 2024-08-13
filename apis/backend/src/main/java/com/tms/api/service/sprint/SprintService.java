@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.common.objects.models.api.ResponseModel;
 import com.common.repository.logging.LoggingApiRepository;
+import com.common.service.BaseService;
 import com.tms.api.objects.models.sprint.SprintModel;
 import com.tms.api.objects.models.sprint.document.SprintDocument;
 import com.tms.api.objects.models.sprint.request.AddSprintRequestModel;
@@ -19,7 +20,6 @@ import com.tms.api.objects.models.sprint.request.UpdateSprintRequestModel;
 import com.tms.api.objects.types.task.SprintType;
 import com.tms.api.repository.database.project.ProjectRepository;
 import com.tms.api.repository.database.sprint.SprintRepository;
-import com.tms.api.service.BaseService;
 
 @Service
 public class SprintService extends BaseService  {

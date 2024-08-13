@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.common.objects.models.api.ResponseModel;
 import com.common.repository.logging.LoggingApiRepository;
+import com.common.service.BaseService;
 import com.tms.api.objects.models.organization.OrganizationDetailModel;
 import com.tms.api.objects.models.organization.OrganizationModel;
 import com.tms.api.objects.models.organization.api.AddNewOrganizationRequestModel;
@@ -22,14 +23,12 @@ import com.tms.api.objects.types.user.UserRoleType;
 import com.tms.api.objects.viewmodels.organization.OrganizationViewModel;
 import com.tms.api.repository.database.organization.OrganizationRepository;
 import com.tms.api.repository.database.organization.UserOrganizationLinkedRepository;
-import com.tms.api.service.BaseService;
 
 @Service
 public class OrganizationService extends BaseService {
     
     private final OrganizationRepository _organizationRepository;
     private final UserOrganizationLinkedRepository _userOrganizationLinkedRepository;
-
 
     public OrganizationService(ModelMapper modelMapper,
         OrganizationRepository organizationRepository,
@@ -41,7 +40,6 @@ public class OrganizationService extends BaseService {
         _organizationRepository = organizationRepository;
         _userOrganizationLinkedRepository = userOrganizationLinkedRepository;
     }
-
 
     public ResponseModel<List<OrganizationViewModel>> GetOrganizations(String userId) {
         try {

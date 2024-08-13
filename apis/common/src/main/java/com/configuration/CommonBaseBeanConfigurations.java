@@ -2,6 +2,7 @@ package com.configuration;
 
 import java.net.http.HttpClient;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,5 +33,10 @@ public class CommonBaseBeanConfigurations {
     @Bean
     LoggingApiRepository loggingApiRepository() {
         return new LoggingApiRepository(httpClient(), objectMapper(), commonProperties());
+    }
+
+    @Bean
+    ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

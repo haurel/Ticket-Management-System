@@ -1,3 +1,14 @@
 package com.common.objects.models.user;
 
-public record UserModel(String UserId, String Username, String EmailAddress) {}
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserModel {
+    private String userId;
+    private String username;
+    private String emailAddress;
+}

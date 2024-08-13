@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.authapi.service.auth.AuthService;
 import com.common.helpers.apis.AuthApi;
+import com.common.objects.models.api.ResponseModel;
 import com.common.objects.models.user.UserModel;
 import com.common.objects.models.user.request.LoginUserRequestModel;
 import com.common.objects.models.user.request.RegisterUserRequestModel;
@@ -23,13 +24,12 @@ public class AuthController {
     }
 
     @PostMapping(AuthApi.Action.Login)
-    public UserModel Login(@RequestBody LoginUserRequestModel request) {
+    public ResponseModel<UserModel> Login(@RequestBody LoginUserRequestModel request) {
         return _authService.Login(request);
     }
     
     @PostMapping(AuthApi.Action.Register)
-    public Boolean Register(@RequestBody RegisterUserRequestModel request) {
-        _authService.Register(request);
-        return true;
+    public ResponseModel<Boolean> Register(@RequestBody RegisterUserRequestModel request) {
+        return _authService.Register(request);
     }
 }

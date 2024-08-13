@@ -4,11 +4,12 @@ import java.net.http.HttpClient;
 
 import org.springframework.stereotype.Repository;
 
+import com.common.objects.models.api.ResponseModel;
 import com.common.objects.models.logging.LoggingRequestModel;
 import com.common.objects.models.request.RequestModel;
 import com.common.repository.BaseApiRepository;
+import com.common.types.api.ResponseStatusType;
 import com.configuration.CommonProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Repository
@@ -22,9 +23,9 @@ public class LoggingApiRepository extends BaseApiRepository {
         _loggingApiUrl = commonProperties.getLoggingApiUrl();
     }
 
-    public Boolean LogException(LoggingRequestModel loggingRequest) {
+    public ResponseModel<Boolean> LogException(LoggingRequestModel loggingRequest) {
         var objectMapper = new ObjectMapper();
-        Boolean response = false;
+        ResponseModel<Boolean> response = new ResponseModel<Boolean>(false, ResponseStatusType.Error.toString(), ResponseStatusType.Error);
         try {
             var jsonRequest = objectMapper.writeValueAsString(loggingRequest);
 
@@ -32,8 +33,8 @@ public class LoggingApiRepository extends BaseApiRepository {
             response = Post(request, Boolean.class);
             return response;
 
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return response;
         }
     }
